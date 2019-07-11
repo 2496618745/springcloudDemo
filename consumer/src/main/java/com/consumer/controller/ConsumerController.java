@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by IntelliJ IDEA.
@@ -25,6 +26,14 @@ public class ConsumerController {
     public String getConsumer() {
         String result = productService.getProduct();
         return result;
+    }
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @RequestMapping("/client/hi")
+    public String sayHi() {
+        return restTemplate.getForObject("http://PRODUCT-SERVER/product/getProduct", String.class);
     }
 
     @RequestMapping("/getOne/{id}")
